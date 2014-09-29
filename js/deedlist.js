@@ -1,5 +1,14 @@
 angular.module('karmaMeter')
     .directive('ngDeedList', function (Data, Timer) {
+        var buttonStart = function(id) {
+                $("#deed-"+id+" button").removeClass("button-royal").addClass("button-energized");
+                $("#deed-"+id+" button i").removeClass("ion-ios7-clock-outline").addClass("ion-loading-b");
+            },
+            buttonStop = function(id) {
+                $("#deed-"+id+" button").removeClass("button-energized").addClass("button-royal");
+                $("#deed-"+id+" button i").removeClass("ion-loading-b").addClass("ion-ios7-clock-outline");
+            };
+
         return {
             restrict: 'E',
             replace: true,
@@ -16,13 +25,15 @@ angular.module('karmaMeter')
                     var active = Timer.getActive();
                     if (active.id && active.id === id) {
                         Timer.stop(id);
+                        buttonStop(id);
                     } else {
+                        if (active.id) {
+                            buttonStop(active.id);
+                        }
                         Timer.stop();
+                        buttonStart(id);
                         Timer.start(id);
                     }
-                    // get data object
-                    // change icon color
-                    // change button
                 };
             }
         };

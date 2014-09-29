@@ -1,6 +1,6 @@
 <div class="list">
 
-    <div class="item item-button-right" ng-repeat="item in list">
+    <div class="item item-button-right" ng-repeat="item in list" id="deed-{{item.id}}">
         {{item.name}} (x{{item.multiplier}})
         <button class="button button-royal" ng-click="toggleTimer(item.id)">
             <i class="icon ion-ios7-clock-outline"></i>

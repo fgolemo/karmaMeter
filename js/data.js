@@ -8,35 +8,25 @@ angular.module('karmaMeter')
                 good: false,
                 bad: false
             },
-            lastID = 4,
+            lastID = 2,
             deeds = {
                 good: [
                     {
                         id: 1,
                         name: "work",
                         multiplier: 1
-                    },
-                    {
-                        id: 2,
-                        name: "work hard",
-                        multiplier: 60
-                    },
-                    {
-                        id: 3,
-                        name: "work super hard",
-                        multiplier: 120
                     }
                 ],
                 bad: [
                     {
-                        id: 4,
-                        name: "play super hard",
-                        multiplier: 120
+                        id: 2,
+                        name: "play",
+                        multiplier: 2
                     }
 
                 ]
             },
-            history = [
+            history = [ //TODO
                 {
                     id: 2,
                     start: 1 //datetime
