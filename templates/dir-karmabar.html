@@ -2,24 +2,26 @@
     <div class="col col-50">
         <div class="progress">
             <div class="progress-bar progress-bar-danger progress-bar-striped"
+                 ng-class="{active: data.active.bad}"
                  role="progressbar"
                  aria-valuenow="{{data.karma.bad}}"
                  aria-valuemin="0"
-                 aria-valuemax="100"
-                 style="width: {{data.karma.bad}}%; display: block; float: right;">
-                <span class="sr-only">{{data.karma.bad}}%</span>
+                 aria-valuemax="90"
+                 style="width: {{data.karma.bad * 1.12}}%; display: block; float: right;">
+                <span ng-show="data.active.bad">{{data.karma.bad}}</span>
             </div>
         </div>
     </div>
     <div class="col col-50">
         <div class="progress">
             <div class="progress-bar progress-bar-info progress-bar-striped"
+                 ng-class="{active: data.active.good}"
                  role="progressbar"
                  aria-valuenow="{{data.karma.good}}"
                  aria-valuemin="0"
-                 aria-valuemax="100"
-                 style="width: {{data.karma.good}}%">
-                <span class="sr-only">{{data.karma.good}}%</span>
+                 aria-valuemax="90"
+                 style="width: {{data.karma.good * 1.12}}%">
+                <span ng-show="data.active.good">{{data.karma.good}}</span>
             </div>
         </div>
     </div>

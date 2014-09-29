@@ -2,9 +2,49 @@ angular.module('karmaMeter')
     .service('Data', function () {
         var karma = {
                 good: 0,
-                bad: 25
+                bad: 88
             },
-            active = true;
+            active = {
+                good: false,
+                bad: false
+            },
+            deeds = {
+                good: [
+                    {
+                        id: 1,
+                        name: "work",
+                        multiplier: 1
+                    },
+                    {
+                        id: 2,
+                        name: "work hard",
+                        multiplier: 60
+                    },
+                    {
+                        id: 3,
+                        name: "work super hard",
+                        multiplier: 120
+                    }
+                ],
+                bad: [
+                    {
+                        id: 4,
+                        name: "play super hard",
+                        multiplier: 120
+                    }
+
+                ]
+            },
+            history = [
+                {
+                    id: 2,
+                    start: 1 //datetime
+                },
+                {
+                    id: 2,
+                    end: 1 //datetime
+                },
+            ];
 
         return {
             karma: karma,
@@ -12,11 +52,33 @@ angular.module('karmaMeter')
                 if (newKarma < 0) {
                     karma.good = 0;
                     karma.bad = Math.abs(newKarma);
+                    active.good = false;
+                    active.bad = true;
                 } else {
                     karma.bad = 0;
                     karma.good = newKarma;
+                    active.bad = false;
+                    active.good = true;
                 }
             },
-            active: active
+            active: active,
+            deeds: deeds,
+            history: history,
+            getDeed: function (id) {
+                for (var i in deeds.good) {
+                    if (deeds.good[i].id == id) {
+                        deeds.good[i].good = true;
+                        return deeds.good[i];
+                    }
+                }
+                for (var i in deeds.bad) {
+                    if (deeds.bad[i].id == id) {
+                        deeds.good[i].good = false;
+                        return deeds.bad[i];
+                    }
+                }
+                console.err("deed not found");
+                return false; //this actually shouldn't happen
+            }
         }
     });

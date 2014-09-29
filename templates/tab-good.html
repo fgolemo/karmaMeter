@@ -1,9 +1,9 @@
 <ion-view title="Do Good">
     <ion-content>
-        <ion-list>
-            <ion-item ng-repeat="friend in friends" type="item-text-wrap" href="#/tab/friend/{{friend.id}}">
-                {{friend.name}}
-            </ion-item>
-        </ion-list>
+        <ng-karma-bar></ng-karma-bar>
+        <ng-deed-list list="good"></ng-deed-list>
+        <button class="button button-block button-stable">
+            Add a good deed
+        </button>
     </ion-content>
 </ion-view>
