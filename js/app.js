@@ -47,21 +47,21 @@ angular.module('karmaMeter', ['ionic'])
                     }
                 }
             })
-            .state('tab.good-detail', {
-                url: '/good/:deedId',
-                views: {
-                    'tab-good': {
-                        templateUrl: 'templates/tab-good-detail.html',
-                        controller: 'GoodDetailCtrl'
-                    }
-                }
-            })
             .state('tab.good-add', {
                 url: '/good/add',
                 views: {
                     'tab-good': {
                         templateUrl: 'templates/tab-good-add.html',
                         controller: 'GoodAddCtrl'
+                    }
+                }
+            })
+            .state('tab.good-detail', {
+                url: '/good/:deedId',
+                views: {
+                    'tab-good': {
+                        templateUrl: 'templates/tab-good-detail.html',
+                        controller: 'GoodDetailCtrl'
                     }
                 }
             })
@@ -74,7 +74,18 @@ angular.module('karmaMeter', ['ionic'])
                         controller: 'BadCtrl'
                     }
                 }
-            });
+            })
+            .state('tab.bad-add', {
+                url: '/bad/add',
+                views: {
+                    'tab-bad': {
+                        templateUrl: 'templates/tab-bad-add.html',
+                        controller: 'BadAddCtrl'
+                    }
+                }
+            })
+
+        ;
 
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/tab/karma');

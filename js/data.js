@@ -2,12 +2,13 @@ angular.module('karmaMeter')
     .service('Data', function () {
         var karma = {
                 good: 0,
-                bad: 88
+                bad: 0
             },
             active = {
                 good: false,
                 bad: false
             },
+            lastID = 4,
             deeds = {
                 good: [
                     {
@@ -44,7 +45,15 @@ angular.module('karmaMeter')
                     id: 2,
                     end: 1 //datetime
                 },
-            ];
+            ],
+            newGoodDeed = {
+                name: "",
+                multiplier: 1
+            },
+            newBadDeed = {
+                name: "",
+                multiplier: 1
+            };
 
         return {
             karma: karma,
@@ -59,6 +68,27 @@ angular.module('karmaMeter')
                     karma.good = newKarma;
                     active.bad = false;
                     active.good = true;
+                }
+            },
+            newGoodDeed: newGoodDeed,
+            newBadDeed: newBadDeed,
+            addDeed: function () {
+                if (newGoodDeed.name != "") {
+                    newGoodDeed.id = lastID + 1;
+                    lastID += 1;
+                    deeds.good.push(JSON.parse(JSON.stringify(newGoodDeed)));
+                    newGoodDeed = {
+                        name: "",
+                        multiplier: 1
+                    };
+                } else if (newBadDeed.name != "") {
+                    newBadDeed.id = lastID + 1;
+                    lastID += 1;
+                    deeds.bad.push(JSON.parse(JSON.stringify(newBadDeed)));
+                    newBadDeed = {
+                        name: "",
+                        multiplier: 1
+                    };
                 }
             },
             active: active,
@@ -81,4 +111,6 @@ angular.module('karmaMeter')
                 return false; //this actually shouldn't happen
             }
         }
-    });
+    }
+)
+;
