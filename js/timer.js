@@ -9,7 +9,7 @@ angular.module('karmaMeter')
                 var now = new Date();
                 if (historyWritten === false) { //first tick
                     historyWritten = true;
-                    Data.history.push({
+                    Data.addHistory({
                         id: active,
                         start: now
                     });
@@ -42,7 +42,7 @@ angular.module('karmaMeter')
                     Data.active.bad = false;
                     var done = $interval.cancel(timerPromiseHolder.tp);
                     timerPromiseHolder.tp = undefined;
-                    Data.history.push({
+                    Data.addHistory({
                         id: active.id,
                         end: new Date()
                     });

@@ -1,4 +1,4 @@
-angular.module('karmaMeter', ['ionic'])
+angular.module('karmaMeter', ['ionic', "LocalStorageModule"])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {

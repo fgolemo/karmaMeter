@@ -1,5 +1,5 @@
 angular.module('karmaMeter')
-    .service('Data', function () {
+    .service('Data', function (localStorageService) {
         var karma = {
                 good: 0,
                 bad: 0
@@ -45,7 +45,23 @@ angular.module('karmaMeter')
                     name: "",
                     multiplier: 1
                 }
+            },
+            init = function() { // load LocalStorage stuff
+                var lsDeeds = localStorageService.get("deeds"),
+                    lsKarma = localStorageService.get("karma"),
+                    lsHistory = localStorageService.get("history");
+                if (lsDeeds) {
+                    deeds = JSON.parse(JSON.stringify(lsDeeds));
+                }
+                if (lsKarma) {
+                    karma = JSON.parse(JSON.stringify(lsKarma));
+                }
+                if (lsHistory) {
+                    history = JSON.parse(JSON.stringify(lsHistory));
+                }
             };
+
+        init();
 
         return {
             karma: karma,
@@ -61,35 +77,44 @@ angular.module('karmaMeter')
                     active.bad = false;
                     active.good = true;
                 }
+                localStorageService.set("karma", karma);
             },
             newDeed: newDeed,
             addDeed: function (good) {
-                console.log(newDeed);
+                var dirty = false;
                 if (good && newDeed.good.name != "") {
                     newDeed.good.id = lastID + 1;
-                    lastID += 1;
                     deeds.good.push(JSON.parse(JSON.stringify(newDeed.good)));
                     newDeed.good = {
                         name: "",
                         multiplier: 1
                     }
-                    return true;
-                }
-                if (!good && newDeed.bad.name != "") {
+                    dirty = true;
+                } else if (!good && newDeed.bad.name != "") {
                     newDeed.bad.id = lastID + 1;
-                    lastID += 1;
                     deeds.bad.push(JSON.parse(JSON.stringify(newDeed.bad)));
                     newDeed.bad = {
                         name: "",
                         multiplier: 1
                     }
-                    return true;
+                    dirty = true;
                 }
-                return false;
+                if ( dirty ) {
+                    lastID += 1;
+                    localStorageService.set("deeds", deeds);
+                    return true
+                } else {
+                    return false;
+                }
+
             },
             active: active,
             deeds: deeds,
             history: history,
+            addHistory: function(newHist) {
+                history.push(newHist);
+                localStorageService.set("history", history);
+            },
             getDeed: function (id) {
                 for (var i in deeds.good) {
                     if (deeds.good[i].id == id) {
