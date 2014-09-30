@@ -36,13 +36,15 @@ angular.module('karmaMeter')
                     end: 1 //datetime
                 },
             ],
-            newGoodDeed = {
-                name: "",
-                multiplier: 1
-            },
-            newBadDeed = {
-                name: "",
-                multiplier: 1
+            newDeed = {
+                good: {
+                    name: "",
+                    multiplier: 1
+                },
+                bad: {
+                    name: "",
+                    multiplier: 1
+                }
             };
 
         return {
@@ -60,26 +62,30 @@ angular.module('karmaMeter')
                     active.good = true;
                 }
             },
-            newGoodDeed: newGoodDeed,
-            newBadDeed: newBadDeed,
-            addDeed: function () {
-                if (newGoodDeed.name != "") {
-                    newGoodDeed.id = lastID + 1;
+            newDeed: newDeed,
+            addDeed: function (good) {
+                console.log(newDeed);
+                if (good && newDeed.good.name != "") {
+                    newDeed.good.id = lastID + 1;
                     lastID += 1;
-                    deeds.good.push(JSON.parse(JSON.stringify(newGoodDeed)));
-                    newGoodDeed = {
+                    deeds.good.push(JSON.parse(JSON.stringify(newDeed.good)));
+                    newDeed.good = {
                         name: "",
                         multiplier: 1
-                    };
-                } else if (newBadDeed.name != "") {
-                    newBadDeed.id = lastID + 1;
-                    lastID += 1;
-                    deeds.bad.push(JSON.parse(JSON.stringify(newBadDeed)));
-                    newBadDeed = {
-                        name: "",
-                        multiplier: 1
-                    };
+                    }
+                    return true;
                 }
+                if (!good && newDeed.bad.name != "") {
+                    newDeed.bad.id = lastID + 1;
+                    lastID += 1;
+                    deeds.bad.push(JSON.parse(JSON.stringify(newDeed.bad)));
+                    newDeed.bad = {
+                        name: "",
+                        multiplier: 1
+                    }
+                    return true;
+                }
+                return false;
             },
             active: active,
             deeds: deeds,

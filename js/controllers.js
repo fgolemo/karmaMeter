@@ -14,18 +14,20 @@ angular.module('karmaMeter')
     })
 
     .controller('GoodAddCtrl', function ($scope, Data, $state) {
-        $scope.newGoodDeed = Data.newGoodDeed;
+        $scope.newDeed = Data.newDeed;
         $scope.add = function() {
-            Data.addDeed();
-            $state.go("tab.good");
+            if (Data.addDeed(true)) {
+                $state.go("tab.good");
+            }
         };
     })
 
     .controller('BadAddCtrl', function ($scope, Data, $state) {
-        $scope.newBadDeed = Data.newBadDeed;
+        $scope.newDeed = Data.newDeed;
         $scope.add = function() {
-            Data.addDeed();
-            $state.go("tab.bad");
+            if (Data.addDeed(false)) {
+                $state.go("tab.bad");
+            }
         };
     })
 
