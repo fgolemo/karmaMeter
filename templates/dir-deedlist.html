@@ -2,9 +2,10 @@
 
     <div class="item item-button-right" ng-repeat="item in list" id="deed-{{item.id}}" ng-class="{good: good, bad: !good}">
         {{item.name}} (x{{item.multiplier}})
-        <button class="button" ng-click="toggleTimer(item.id)"  ng-class="{'button-positive': good, 'button-assertive': !good}">
-            <i class="icon ion-ios7-clock-outline"></i>
+        <button class="button" ng-click="toggleTimer(item.id)"
+                ng-class="{'button-positive': (active.data.id != item.id && good), 'button-assertive': (active.data.id != item.id && !good), 'button-energized': active.data.id == item.id}">
+            <i class="icon"
+               ng-class="{'ion-ios7-clock-outline': active.data.id != item.id, 'ion-loading-b': active.data.id == item.id}"></i>
         </button>
     </div>
-
 </div>

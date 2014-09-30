@@ -1,6 +1,6 @@
 angular.module('karmaMeter')
     .service('Timer', function (Data, $interval) {
-        var active = {},
+        var active = {data: {}},
             timerInterval = 1000,
             timerPromiseHolder = {},
             historyWritten = false,
@@ -10,7 +10,7 @@ angular.module('karmaMeter')
                 if (historyWritten === false) { //first tick
                     historyWritten = true;
                     Data.addHistory({
-                        id: active,
+                        data: JSON.parse(JSON.stringify(active.data)),
                         start: now
                     });
                     timerBuffer = {
@@ -23,8 +23,8 @@ angular.module('karmaMeter')
                     }
                 } else {
                     var timeDiff = (now.getTime() - timerBuffer.oldTime.getTime()) / 1000,
-                        valueDiff = timeDiff/60 * active.multiplier,
-                        goodBad = (active.good) ? 1 : -1,
+                        valueDiff = timeDiff/60 * active.data.multiplier,
+                        goodBad = (active.data.good) ? 1 : -1,
                         oldValue = Math.round(timerBuffer.value),
                         newValue = Math.round(timerBuffer.value + goodBad * valueDiff);
                     if (oldValue != newValue) {
@@ -43,17 +43,17 @@ angular.module('karmaMeter')
                     var done = $interval.cancel(timerPromiseHolder.tp);
                     timerPromiseHolder.tp = undefined;
                     Data.addHistory({
-                        id: active.id,
+                        id: active.data.id,
                         end: new Date()
                     });
-                    active = false;
+                    active.data = {};
                     historyWritten = false;
                     timerBuffer = false;
                 }
             },
-            getActive: function() {return active;},
+            active: active,
             start: function (id) {
-                active = Data.getDeed(id);
+                active.data = Data.getDeed(id);
                 timerTick();
                 timerPromiseHolder.tp = $interval(timerTick, timerInterval);
             }
